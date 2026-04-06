@@ -2,57 +2,44 @@ const track = document.querySelector(".track");
 const nextBtn = document.querySelector(".next");
 const prevBtn = document.querySelector(".prev");
 
-// 1. Setup Clones
 const originalCards = Array.from(track.querySelectorAll(".card"));
-if (track.querySelectorAll(".card").length === originalCards.length) {
-    const firstClone = originalCards[0].cloneNode(true);
-    const lastClone = originalCards[originalCards.length - 1].cloneNode(true);
-    track.appendChild(firstClone);
-    track.insertBefore(lastClone, originalCards[0]);
-}
+const total = originalCards.length;
+
+// Clone the full set before and after
+const beforeClones = originalCards.map(c => c.cloneNode(true));
+const afterClones = originalCards.map(c => c.cloneNode(true));
+
+beforeClones.reverse().forEach(c => track.insertBefore(c, track.firstChild));
+afterClones.forEach(c => track.appendChild(c));
 
 const allCards = Array.from(track.querySelectorAll(".card"));
-let index = 1;
+let index = total; // start at the first real card
 
-// 2. The Move Function (Now calculates width on the fly)
 function updateCarousel(animate = true) {
-    const card = allCards[0];
-    const cardWidth = card.offsetWidth;
+    const cardWidth = allCards[0].offsetWidth;
     const gap = parseFloat(window.getComputedStyle(track).gap) || 0;
     const containerWidth = document.querySelector(".carousel").offsetWidth;
-
     const offset = (index * (cardWidth + gap)) - (containerWidth / 2) + (cardWidth / 2);
 
     track.style.transition = animate ? "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)" : "none";
     track.style.transform = `translateX(-${offset}px)`;
 }
 
-// 3. The "Silent Jump" (Logic moved here to avoid the flag issue)
 track.addEventListener("transitionend", () => {
-    if (index === allCards.length - 1) {
-        index = 1;
+    // Slid past the end — jump to the matching real card
+    if (index >= total * 2) {
+        index = index - total;
         updateCarousel(false);
     }
-    if (index === 0) {
-        index = allCards.length - 2;
+    // Slid past the beginning — jump to the matching real card
+    if (index < total) {
+        index = index + total;
         updateCarousel(false);
     }
 });
 
-// 4. Eager Buttons
-nextBtn.addEventListener("click", () => {
-    index++;
-    updateCarousel(true);
-});
+nextBtn.addEventListener("click", () => { index++; updateCarousel(true); });
+prevBtn.addEventListener("click", () => { index--; updateCarousel(true); });
 
-prevBtn.addEventListener("click", () => {
-    index--;
-    updateCarousel(true);
-});
-
-// 5. Immediate Init
-// Don't wait for "load" (images), just wait for "DOMContentLoaded" (HTML structure)
-document.addEventListener("DOMContentLoaded", () => updateCarousel(false));
-// Backup for window load
-window.addEventListener("load", () => updateCarousel(false));
+updateCarousel(false);
 window.addEventListener("resize", () => updateCarousel(false));

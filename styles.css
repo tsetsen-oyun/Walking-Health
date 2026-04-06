@@ -1,7 +1,7 @@
-  /* font-family: 'Instrument Serif', serif; */
-  /* font-family: 'Geist Mono', monospace; */
-  /* font-family: 'Syne', sans-serif; */
-  /* font-family: 'Rubik Dirt', serif; */
+/* font-family: 'Instrument Serif', serif; */
+/* font-family: 'Geist Mono', monospace; */
+/* font-family: 'Syne', sans-serif; */
+/* font-family: 'Rubik Dirt', serif; */
 :root {
   --main: rgb(254,249,247);
   --main-dark: rgb(246, 234, 234);
@@ -14,7 +14,7 @@ html {
   scrollbar-color: var(--pink);
 }
 
-*, *::before, *::after{
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -58,25 +58,23 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
 /* HERO */
 .hero {
   position: relative;
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
   width: 100%;
   height: 90vh;
   text-align: center;
-  border: 2px solid rebeccapurple;
 }
 
 .stats {
   position: absolute;
   top: 45%;
-  left: 27%;
-  justify-content: right;
-  align-items: baseline;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   z-index: 1;
   width: max-content;
   color: var(--main-dark);
@@ -111,19 +109,18 @@ body {
 /* ARTICLES */
 .carousel-container {
   position: relative;
-  
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 70px;
   z-index: 999;
-  border: 2px solid rgb(94, 255, 0);
+  height: 800px;
 }
 
 .slider-wave {
   width: 120%;
-  height: 120px;
+  height: 220px;
   background: var(--main);
   position: absolute;
   left: 50%;
@@ -131,13 +128,14 @@ body {
   z-index: 2;
   pointer-events: none;
 }
+
 .upper {
   border-radius: 0 0 50% 50% / 0 0 100% 100%;
   top: 0;
 }
 
 .lower {
-  border-radius: 50% 50% 0 0/ 100% 100% 0 0;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   bottom: 0;
 }
 
