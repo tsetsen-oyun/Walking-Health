@@ -1,0 +1,195 @@
+:root {
+  --main: rgb(254,249,247);
+  --main-dark: rgb(246, 234, 234);
+  --pink: rgb(233,199,221); 
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pink);
+}
+
+*, *::before, *::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--main);
+  margin: 0;
+  padding: 0;
+  font-family: 'Syne', sans-serif;
+  cursor: default;
+  overflow-x: hidden;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+  flex-direction: column;
+}
+
+.stats {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 7rem;
+  color: var(--main-dark);
+  animation: fadeUp 5.0s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.hero-content {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  text-align: center;
+}
+
+.hero-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--pink);
+  animation: fadeUp 5.0s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-subtitle {
+  /* font-family: 'Geist Mono', monospace; */
+  padding: 10px;
+  font-family: 'Syne', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 3rem;
+  padding: 0 20px;
+  margin-top: 20px;
+}
+
+.nav-logo {
+  text-decoration: none;
+  font-family: "Gasoek One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  /* font-family: 'Instrument Serif', serif; */
+  /* font-family: 'Geist Mono', monospace; */
+  /* font-family: 'Syne', sans-serif; */
+  /* font-family: 'Rubik Dirt', serif; */
+  font-size: 2rem;
+  color: var(--pink);
+}
+
+.nav-menu {
+  text-decoration: none;
+  font-size: 2rem;
+  color: var(--pink);
+  cursor: pointer;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 70px;
+}
+
+.slider-wave {
+  width: 120%;
+  height: 120px;
+  background: var(--main);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+}
+.upper {
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  top: 0;
+}
+
+.lower {
+  border-radius: 50% 50% 0 0/ 100% 100% 0 0;
+  bottom: 0;
+}
+
+.carousel {
+  width: 100%;
+  max-width: 1600px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+
+.track {
+  display: flex;
+  gap: 8px;
+  transition: transform 0.5s ease;
+}
+
+.card {
+  width: 400px;
+  height: 650px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  transform: scale(0.88);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Buttons */
+.nav {
+  border: 2px solid var(--pink);
+  color: var(--pink);
+  background: transparent;
+  padding: 10px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+  position: absolute;
+  z-index: 999;
+}
+
+.nav:hover {
+  background: var(--pink);
+  color: #333;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
+}
