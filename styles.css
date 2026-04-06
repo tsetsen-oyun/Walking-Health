@@ -1,3 +1,7 @@
+  /* font-family: 'Instrument Serif', serif; */
+  /* font-family: 'Geist Mono', monospace; */
+  /* font-family: 'Syne', sans-serif; */
+  /* font-family: 'Rubik Dirt', serif; */
 :root {
   --main: rgb(254,249,247);
   --main-dark: rgb(246, 234, 234);
@@ -25,95 +29,96 @@ body {
   overflow-x: hidden;
 }
 
+/* NAVIGATION */
+.navigation {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 5vh;
+  padding: 0 40px;
+  margin: 20px 0;
+}
+
+.nav-logo {
+  color: var(--pink);
+  font-family: "Gasoek One", sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.nav-menu {
+  color: var(--pink);
+  font-size: 2rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* HERO */
 .hero {
   position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-  text-align: center;
   flex-direction: column;
+  /* justify-content: center;
+  align-items: center; */
+  width: 100%;
+  height: 90vh;
+  text-align: center;
+  border: 2px solid rebeccapurple;
 }
 
 .stats {
   position: absolute;
   top: 45%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 27%;
+  justify-content: right;
+  align-items: baseline;
   z-index: 1;
-  font-size: 7rem;
+  width: max-content;
   color: var(--main-dark);
+  font-size: 7rem;
+  text-align: center;
   animation: fadeUp 5.0s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
 .hero-content {
   position: absolute;
   top: 18%;
   left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  text-align: center;
-}
-
-.hero-title{
+  z-index: 2;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  text-align: center;
+  transform: translateX(-50%);
 }
 
 .hero-title em {
   font-style: italic;
   color: var(--pink);
-  animation: fadeUp 5.0s 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeUp 10.0s 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hero-subtitle {
-  /* font-family: 'Geist Mono', monospace; */
   padding: 10px;
   font-family: 'Syne', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 3rem;
-  padding: 0 20px;
-  margin-top: 20px;
-}
-
-.nav-logo {
-  text-decoration: none;
-  font-family: "Gasoek One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  letter-spacing: 1px;
-  /* font-family: 'Instrument Serif', serif; */
-  /* font-family: 'Geist Mono', monospace; */
-  /* font-family: 'Syne', sans-serif; */
-  /* font-family: 'Rubik Dirt', serif; */
-  font-size: 2rem;
-  color: var(--pink);
-}
-
-.nav-menu {
-  text-decoration: none;
-  font-size: 2rem;
-  color: var(--pink);
-  cursor: pointer;
-}
-
+/* ARTICLES */
 .carousel-container {
   position: relative;
+  
   width: 100%;
-  margin: 40px auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 70px;
+  z-index: 999;
+  border: 2px solid rgb(94, 255, 0);
 }
 
 .slider-wave {
