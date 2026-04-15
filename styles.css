@@ -1,0 +1,1047 @@
+/* ═══════════════════════════════════════════════════════════
+   SARANGUA WALKING METHOD — STYLESHEET
+   Strategy : mobile-first. Base styles target phones (≥ 320 px).
+   Breakpoints:
+     sm   480 px  large phones / landscape
+     md   768 px  tablets / iPad
+     lg  1024 px  iPad Pro / small desktop
+     xl  1280 px  full desktop
+
+   Naming  : BEM (Block__Element--Modifier)
+   Fonts   : Oswald (display) · Urbanist (body / UI)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── 1. Design Tokens ────────────────────────────────────── */
+:root {
+  /* Palette */
+  /* --color-main:        rgb(254, 249, 247); */
+  --color-main:        rgb(255, 255, 255);
+  --color-main-dark:   rgb(246, 234, 234);
+  --color-light-pink:  rgb(255, 215, 241);
+  --color-pink:        rgb(247, 155, 192);
+  --color-yellow:      rgb(251, 233, 159);
+  --color-blue:        rgb(161, 207, 254);
+  --color-midnight-blue: rgb(26, 26, 46);
+
+  /* Spacing (rem) */
+  --sp-xs:  0.25rem;
+  --sp-sm:  0.5rem;
+  --sp-md:  1rem;
+  --sp-lg:  1.5rem;
+  --sp-xl:  2rem;
+  --sp-2xl: 3rem;
+
+  /* Nav heights */
+  --nav-h-mobile: 3.75rem;   /* 60 px */
+  --nav-h-tablet: 10vh;
+
+  /* Wave element height */
+  --wave-h: 13.75rem;        /* 220 px */
+
+  /* Border radii */
+  --r-sm:   0.5rem;
+  --r-full: 999px;
+}
+
+/* ── 2. Reset ────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-midnight-blue) transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-main);
+  font-family: "Urbanist", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* ── 3. Shared utility: animated wave scroll ─────────────── */
+/* Used by .hero__wave, .testimonial__wave, .final-cta__wave */
+@keyframes wave-flow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Shared structure for all dual-SVG animated waves */
+.hero__wave,
+.testimonial__wave,
+.final-cta__wave {
+  display: flex;
+  width: 200%;    /* two SVGs side-by-side for seamless loop */
+  animation: wave-flow 14s linear infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.hero__wave svg,
+.testimonial__wave svg,
+.final-cta__wave svg {
+  width: 50%;
+  height: 100%;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   4. NAVIGATION
+   ═══════════════════════════════════════════════════════════ */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--nav-h-mobile);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+}
+
+.nav__logo {
+  color: white;
+  font-family: "Urbanist", sans-serif;
+  font-size: clamp(1.3rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1;
+}
+
+/* 44 × 44 px minimum touch target */
+.nav__menu {
+  color: white;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.nav__menu:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+@media (min-width: 768px) {
+  .nav {
+    height: var(--nav-h-tablet);
+    padding: 0 var(--sp-xl) var(--sp-md);
+    margin-top: var(--sp-md);
+    align-items: flex-end;
+  }
+
+  .nav__menu {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.8rem;
+    padding-bottom: 0.2rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   5. HERO SECTION
+   ═══════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100dvh;     /* dvh = dynamic vh; correct on iOS Safari */
+  min-height: 35rem;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* ── Background video ─────────────────────────────────────── */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.8;
+}
+
+/* ── Shared absolute positioning for copy elements ─────────── */
+.hero__title,
+.hero__subtitle,
+.hero__cta {
+  position: absolute;
+  left: 50%;
+  z-index: 3;
+}
+
+/* ── Title ────────────────────────────────────────────────── */
+.hero__title {
+  top: 42%;
+  transform: translate(-50%, -50%);
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(2.2rem, 9vw, 8rem);
+  font-weight: 500;
+  line-height: 1.15;
+  color: white;
+  pointer-events: none;
+  white-space: normal;
+  width: 90%;
+  max-width: 58rem;
+}
+
+.hero__title span {
+  font-style: italic;
+  color: var(--color-pink);
+  opacity: 0;
+  animation: fade-in 1.2s ease forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    top: 40%;
+    white-space: nowrap;
+    width: auto;
+  }
+}
+
+/* ── Subtitle ─────────────────────────────────────────────── */
+.hero__subtitle {
+  top: 70%;
+  transform: translate(-50%, -50%);
+  width: 88%;
+  max-width: 36rem;
+  color: white;
+  font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+  line-height: 1.65;
+  padding: var(--sp-sm);
+}
+
+@media (min-width: 768px) {
+  .hero__subtitle {
+    top: 65%;
+    width: auto;
+  }
+}
+
+/* ── CTA button ───────────────────────────────────────────── */
+.hero__cta {
+  top: 82%;
+  transform: translate(-50%, -50%);
+  padding: 0.75rem 2rem;
+  min-height: 2.75rem;
+  border: 1px solid white;
+  border-radius: var(--r-full);
+  background: var(--color-midnight-blue);
+  color: white;
+  font-family: "Urbanist", sans-serif;
+  font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+  font-weight: 500;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.hero__cta:hover {
+  border-color: white;
+  background: transparent;
+  color: var(--color-yellow);
+}
+
+@media (min-width: 768px) {
+  .hero__cta { top: 76%; }
+}
+
+/* ── "30+ Years of Experience" grid panel ─────────────────── */
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 2000;
+  opacity: 0;
+  clip-path: circle(0px at 50% 50%);
+  display: grid;
+  /* Mobile: Two equal rows */
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr; 
+  padding: 0; /* Remove padding so items can hit the edges */
+  gap: 0;
+}
+
+@media (min-width: 768px) {
+  .hero__grid {
+    /* Laptop: Two equal columns */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+.hero__grid-item {
+  font-family: "Oswald", sans-serif;
+  line-height: 1;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+/* Massive number - Right on Laptop / Top on Mobile */
+.hero__grid-item--number {
+  color: var(--color-midnight-blue);
+  font-size: clamp(10rem, 57vw, 62rem); /* Increased size for dominance */
+  letter-spacing: -0.05em;
+  /* border: solid 1px var(--color-blue); Removed for clean split */
+  display: flex;
+  align-items: flex-start; /* Aligns the content to the top of its 50vh box */
+  justify-content: center; 
+  
+  /* Pull the whole block up to kill the top gap */
+  /* margin-top: -2vh;  */
+  line-height: 0.9;
+  /* Ensure the container doesn't hide the overflow while we're positioning */
+  overflow: visible;
+  /* Order control: 1 on Mobile (Top) */
+  width: 100%;
+  height: 100%;
+  order: 1; 
+}
+
+@media (min-width: 768px) {
+  .hero__grid-item--number {
+    /* Order control: 2 on Laptop (Right) */
+    order: 1; 
+  }
+}
+/* The Plus Sign */
+.hero__grid-plus {
+  /* Increased from 7vw to 15vw */
+  font-size: clamp(4rem, 15vw, 15rem); 
+  margin-left: -0.05em; /* Pull it closer to the number */
+}
+
+/* Companion text - Left on Laptop / Bottom on Mobile */
+.hero__grid-item--text {
+  color: var(--color-midnight-blue);
+  font-size: clamp(3rem, 20vw, 13rem);
+  padding: 0;
+  margin: 0;
+  line-height: 0.85;
+  text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  /* Order control: 2 on Mobile (Bottom) */
+  order: 2;
+}
+
+@media (min-width: 768px) {
+  .hero__grid-item--text {
+    /* Order control: 1 on Laptop (Left) */
+    order: 2;
+    text-align: left;
+    padding-left: 5vw; /* Slight breathing room from the edge */
+    justify-content: flex-start;
+  }
+}
+/* ── Water-fill wave ──────────────────────────────────────── */
+/* GSAP drives scaleY; CSS drives horizontal drift. */
+.hero__wave {
+  position: absolute;
+  bottom: -2.5rem;       /* sink below viewport edge */
+  left: 0;
+  height: var(--wave-h);
+  z-index: 1000;
+  transform-origin: bottom center;
+}
+
+.hero__wave svg {
+  transform-origin: bottom center; /* for GSAP's inner SVG scale */
+}
+
+/* ── Solid overlay ────────────────────────────────────────── */
+/* Covers nav + hero once wave fills screen.  z 1500. */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--color-main);
+  z-index: 1500;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   7. ARTICLES / CAROUSEL
+   ═══════════════════════════════════════════════════════════ */
+.articles {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(22rem, 80vw, 50rem);
+  background: var(--color-main);
+  z-index: 999;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .articles {
+    height: clamp(32rem, 55vw, 50rem);
+    gap: var(--sp-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .articles { height: 50rem; }
+}
+
+/* Decorative curved wave caps (top & bottom) */
+.articles__wave {
+  width: 120%;
+  height: clamp(5rem, 14vw, 13rem);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+  background: var(--color-main);
+}
+
+.articles__wave--top {
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  top: 0;
+}
+
+.articles__wave--bottom {
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  bottom: 0;
+}
+
+/* ── Carousel viewport ────────────────────────────────────── */
+.carousel {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 100rem;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.carousel__track {
+  display: flex;
+  gap: 0.5rem;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Fluid card sizing */
+.carousel__card {
+  width: clamp(9rem, 48vw, 25rem);
+  height: clamp(14rem, 72vw, 40rem);
+  flex-shrink: 0;
+  transform: scale(0.88);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.carousel__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+}
+
+@media (min-width: 768px) {
+  .carousel__card {
+    width: clamp(14rem, 26vw, 25rem);
+    height: clamp(22rem, 38vw, 40rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel__card {
+    width: 25rem;
+    height: 40rem;
+  }
+}
+
+/* ── Prev / Next buttons ──────────────────────────────────── */
+.carousel__btn {
+  position: absolute;
+  z-index: 999;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-light-pink);
+  border-radius: 50%;
+  color: var(--color-light-pink);
+  background: transparent;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  transition: background 0.2s, color 0.2s;
+}
+
+.carousel__btn:hover {
+  background: var(--color-light-pink);
+  color: #333;
+}
+
+.carousel__btn--prev { left: 0.5rem; }
+.carousel__btn--next { right: 0.5rem; }
+
+@media (min-width: 768px) {
+  .carousel__btn {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.25rem;
+  }
+  .carousel__btn--prev { left: 1.25rem; }
+  .carousel__btn--next { right: 1.25rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   8. PRODUCTS / PROGRAMMES
+   ═══════════════════════════════════════════════════════════ */
+.products {
+  background: var(--color-main);
+  padding: 5rem var(--sp-md) 6rem;
+  text-align: center;
+}
+
+.products__inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.products__label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-pink);
+  margin-bottom: var(--sp-md);
+}
+
+.products__heading {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: #333;
+  margin-bottom: var(--sp-sm);
+}
+
+.products__sub {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #666;
+  max-width: 36rem;
+  margin: 0 auto var(--sp-2xl);
+  line-height: 1.7;
+}
+
+/* Card grid — 1 col mobile, 3 col tablet+ */
+.products__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-md);
+}
+
+@media (min-width: 768px) {
+  .products__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-lg);
+    align-items: start;
+  }
+}
+
+/* ── Product card ─────────────────────────────────────────── */
+.product-card {
+  background: var(--color-main);
+  border: 1px solid rgba(247, 155, 192, 0.25);
+  border-radius: var(--r-sm);
+  padding: var(--sp-xl) var(--sp-lg) var(--sp-lg);
+  text-align: left;
+  position: relative;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 40px rgba(247, 155, 192, 0.2);
+  transform: translateY(-4px);
+}
+
+.product-card--featured {
+  border-color: var(--color-pink);
+  border-width: 2px;
+}
+
+/* Badge */
+.product-card__badge {
+  position: absolute;
+  top: -0.75rem;
+  left: var(--sp-lg);
+  background: var(--color-pink);
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--r-full);
+}
+
+/* Step label */
+.product-card__step {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-pink);
+  margin-bottom: var(--sp-sm);
+}
+
+/* Title */
+.product-card__title {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 500;
+  color: #333;
+  margin-bottom: var(--sp-sm);
+  line-height: 1.2;
+}
+
+/* Description */
+.product-card__desc {
+  font-size: 0.88rem;
+  color: #777;
+  line-height: 1.65;
+  margin-bottom: var(--sp-lg);
+}
+
+/* Feature list */
+.product-card__features {
+  list-style: none;
+  margin-bottom: var(--sp-xl);
+}
+
+.product-card__features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #444;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(247, 155, 192, 0.12);
+}
+
+.product-card__features li:last-child { border-bottom: none; }
+
+.product-card__features li svg {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  color: var(--color-pink);
+}
+
+/* Card buttons */
+.product-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Urbanist", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  touch-action: manipulation;
+  min-height: 2.75rem;
+  transition: background 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease, transform 0.15s ease;
+}
+
+.product-card__btn--outline {
+  background: transparent;
+  border: 1.5px solid var(--color-pink);
+  color: var(--color-pink);
+}
+
+.product-card__btn--outline:hover {
+  background: var(--color-pink);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.product-card__btn--primary {
+  background: var(--color-blue);
+  border: 1.5px solid var(--color-blue);
+  color: white;
+  box-shadow: 0 4px 18px rgba(161, 207, 254, 0.4);
+}
+
+.product-card__btn--primary:hover {
+  background: transparent;
+  color: var(--color-blue);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   9. SECTION WAVE TRANSITIONS  (between sections)
+   ═══════════════════════════════════════════════════════════ */
+.section-wave-divider,
+.final-wave-in {
+  line-height: 0;
+  overflow: hidden;
+}
+
+.section-wave svg {
+  display: block;
+  width: 100%;
+  height: clamp(5rem, 10vw, 9rem);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   10. TESTIMONIAL
+   ═══════════════════════════════════════════════════════════ */
+.testimonial {
+  background: var(--color-light-pink);
+  text-align: center;
+  padding: 4rem var(--sp-md) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial__inner {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding-bottom: 10rem; /* room for animated wave */
+}
+
+.testimonial__icon {
+  color: var(--color-pink);
+  opacity: 0.7;
+  margin-bottom: var(--sp-lg);
+  display: flex;
+  justify-content: center;
+}
+
+.testimonial__text {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.35;
+  color: #3a2a1a;
+  margin-bottom: var(--sp-lg);
+  font-style: normal;
+}
+
+.testimonial__text em {
+  font-style: italic;
+  color: var(--color-pink);
+}
+
+.testimonial__cite {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(58, 42, 26, 0.55);
+  font-style: normal;
+}
+
+/* Animated wave at the bottom of testimonial */
+.testimonial__wave {
+  position: absolute;
+  bottom: -2rem;
+  left: 0;
+  height: 8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   11. AUTHORITY  (coach bio + stats)
+   ═══════════════════════════════════════════════════════════ */
+
+.authority {
+  background: var(--color-light-pink);
+  padding: 5rem var(--sp-md) 5.5rem;
+}
+
+.authority__inner {
+  padding: 40px 40px;
+  border-radius: 50px;
+  background:var(--color-main);
+  max-width: 56rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+@media (max-width: 767px) {
+  .authority__inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Avatar circle */
+.authority__avatar {
+  width: 9rem;
+  height: 9rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-blue) 0%, var(--color-pink) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 8px 32px rgba(247, 155, 192, 0.3);
+}
+
+@media (min-width: 768px) {
+  .authority__avatar {
+    width: 11rem;
+    height: 11rem;
+  }
+}
+
+.authority__role {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-pink);
+  margin-bottom: 0.4rem;
+}
+
+.authority__name {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 500;
+  color: #333;
+  margin-bottom: var(--sp-md);
+  line-height: 1.1;
+}
+
+.authority__bio {
+  font-size: 0.92rem;
+  color: #666;
+  line-height: 1.75;
+  margin-bottom: var(--sp-xl);
+}
+
+.authority__bio em {
+  font-style: italic;
+  color: #444;
+}
+
+/* Stats row */
+.authority__stats {
+  display: flex;
+  gap: var(--sp-xl);
+  flex-wrap: wrap;
+  margin-top: var(--sp-lg);
+}
+
+@media (max-width: 767px) {
+  .authority__stats { justify-content: center; }
+}
+
+.authority__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+}
+
+@media (max-width: 767px) {
+  .authority__stat { align-items: center; }
+}
+
+.authority__stat-num {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 500;
+  color: var(--color-pink);
+  line-height: 1;
+}
+
+.authority__stat-lbl {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   12. FINAL CTA
+   ═══════════════════════════════════════════════════════════ */
+
+.final-cta {
+  position: relative;
+  background: var(--color-midnight-blue);
+  text-align: center;
+  overflow: hidden;
+  padding-bottom: 6rem;
+}
+
+/* Decorative glow orbs */
+.final-cta::before,
+.final-cta::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.final-cta::before {
+  width: 28rem;
+  height: 28rem;
+  top: -6rem;
+  right: -6rem;
+  background: radial-gradient(circle, rgba(161, 207, 254, 0.06) 0%, transparent 70%);
+}
+
+.final-cta::after {
+  width: 20rem;
+  height: 20rem;
+  bottom: -4rem;
+  left: -4rem;
+  background: radial-gradient(circle, rgba(247, 155, 192, 0.07) 0%, transparent 70%);
+}
+/* Content */
+.final-cta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 4rem var(--sp-md) 0;
+}
+
+.final-cta__label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(161, 207, 254, 0.55);
+  margin-bottom: var(--sp-lg);
+}
+
+.final-cta__heading {
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: var(--sp-lg);
+}
+
+.final-cta__heading em {
+  font-style: italic;
+  color: var(--color-pink);
+}
+
+.final-cta__sub {
+  font-size: clamp(0.88rem, 2vw, 1rem);
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.7;
+  margin-bottom: var(--sp-2xl);
+  font-weight: 300;
+}
+
+.final-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Urbanist", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  border-radius: var(--r-full);
+  background: var(--color-pink);
+  border: 2px solid white;
+  color: #3a2a1a;
+  cursor: pointer;
+  min-height: 2.75rem;
+  touch-action: manipulation;
+  box-shadow: 0 6px 28px rgba(251, 233, 159, 0.45);
+  transition: background 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease, transform 0.15s ease;
+}
+
+.final-cta__btn:hover {
+  background: white;
+  border-color: white;
+  color: var(--color-pink);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(255, 255, 255, 0.35);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   13. FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.site-footer {
+  background: var(--color-main);
+  padding: 2.5rem var(--sp-md);
+  text-align: center;
+  border-top: 1px solid rgba(247, 155, 192, 0.2);
+}
+
+.site-footer p {
+  font-size: 0.8rem;
+  color: #aaa;
+  letter-spacing: 0.05em;
+}
+
+.site-footer a {
+  color: var(--color-pink);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.site-footer a:hover { opacity: 0.7; }

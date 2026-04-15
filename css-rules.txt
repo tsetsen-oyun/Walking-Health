@@ -1,0 +1,39 @@
+1️⃣ Positioning (WHERE it is)
+position
+top / right / bottom / left
+z-index
+
+2️⃣ Display & Layout (HOW it behaves)
+display
+flex / grid
+flex-direction
+justify-content
+align-items
+gap
+
+3️⃣ Box Model (SIZE & spacing)
+width / height
+max-width / min-width
+margin
+padding
+box-sizing
+
+4️⃣ Visual Styles (LOOK)
+background
+color
+border
+border-radius
+box-shadow
+
+5️⃣ Typography (TEXT)
+font-family
+font-size
+font-weight
+line-height
+text-align
+letter-spacing
+
+6️⃣ Effects & Animation (BEHAVIOR)opacity
+transform
+transition
+animation
