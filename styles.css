@@ -178,7 +178,7 @@ video {
 }
 
 /* ── Background video ─────────────────────────────────────── */
-.hero__video {
+/* .hero__video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -186,7 +186,7 @@ video {
   object-fit: cover;
   z-index: 0;
   opacity: 0.8;
-}
+} */
 
 /* ── Shared absolute positioning for copy elements ─────────── */
 .hero__title,
